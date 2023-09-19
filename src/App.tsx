@@ -1,6 +1,10 @@
 import logo from './assets/logo.svg';
 import './App.css';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { fetchTracks } from './lib/fetchTracks';
+import { SavedTrack } from 'spotify-types';
+
 
 const trackUrls = [
   'https://p.scdn.co/mp3-preview/742294f35af9390e799dd96c633788410a332e52',
@@ -10,12 +14,22 @@ const trackUrls = [
   'https://p.scdn.co/mp3-preview/ac28d1b0be285ed3bfd8e9fa5fad133776d7cf36',
 ];
 
-
 const App = () => {
   const [trackIndex, setTrackIndex] = useState(0);
   const goToNextTrack = () => {
     setTrackIndex(trackIndex + 1);
   }
+  const initi = () =>{
+    setTrackIndex(0)
+  }
+  const { data: tracks } = useQuery({
+    queryKey: ['tracks'],
+    queryFn: fetchTracks
+  });
+  console.log({ data: tracks })
+  console.log("nbr d'éléments qu'il contient")
+  console.log({data : tracks}.data.length)
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -27,6 +41,9 @@ const App = () => {
         <audio src={trackUrls[trackIndex]} autoPlay controls />
         <button onClick={goToNextTrack}>
             Next track
+        </button>
+        <button onClick={initi}>
+            initialisation
         </button>
       </div>
       <div className="App-buttons"></div>
