@@ -6,6 +6,11 @@ import { fetchTracks } from './lib/fetchTracks';
 import { SavedTrack } from 'spotify-types';
 
 
+const MonComposant = () => {
+  return (<p>Ici notre composant est un simple paragraphe</p>);
+}
+
+
 
 
 const App = () => {
@@ -36,6 +41,16 @@ const App = () => {
     'https://p.scdn.co/mp3-preview/0f6b8a3524ec410020457da4cdd7717f9addce2f',
     'https://p.scdn.co/mp3-preview/ac28d1b0be285ed3bfd8e9fa5fad133776d7cf36',
   ];
+
+
+  const AlbumCover = ({track}) =>  {
+    const src = track[0].track.album.images[0].url; // A changer ;)
+    console.log(src)
+    return (
+        <img src={src} style={{ width: 400, height: 320  }} />
+    );
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -51,6 +66,8 @@ const App = () => {
         <button onClick={initi}>
             initialisation
         </button>
+        <MonComposant />
+        <AlbumCover  track={tracksFav}/>
       </div>
       <div className="App-buttons"></div>
     </div>
